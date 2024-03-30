@@ -16,3 +16,10 @@ after_success:
   - docker build -t slowjams/nginx ./nginx
   - docker build -t slowjams/server ./server
   - docker build -t slowjams/worker ./worker
+  # travis needs to Log into the docker CLI, so add docker username/password in travis as environment variables first
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push them to docker hub
+  - docker push slowjams/client
+  - docker push slowjams/nginx
+  - docker push slowjams/server
+  - docker push slowjams/worker
